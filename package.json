@@ -1,0 +1,25 @@
+{
+  "name": "bril-lang-hightlight",
+  "displayName": "bril-lang-highlight",
+  "description": "bril lang syntax highlighting",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.91.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "bril",
+      "aliases": ["Bril", "bril"],
+      "extensions": [".bril"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "bril",
+      "scopeName": "source.bril",
+      "path": "./syntaxes/bril.tmLanguage.json"
+    }]
+  }
+}
