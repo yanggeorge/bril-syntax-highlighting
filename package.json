@@ -1,8 +1,13 @@
 {
-  "name": "bril-lang-hightlight",
-  "displayName": "bril-lang-highlight",
-  "description": "bril lang syntax highlighting",
+  "name": "bril-syntax-hightlighting",
+  "displayName": "Bril syntax highlighting",
+  "description": "syntax highlighting for intermediate language Bril",
   "version": "0.0.1",
+  "publisher": "yanggeorge",
+  "repository": {
+    "url": "https://github.com/yanggeorge/bril-syntax-highlighting",
+    "type": "github"
+  },
   "engines": {
     "vscode": "^1.91.0"
   },
@@ -10,16 +15,25 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "bril",
-      "aliases": ["Bril", "bril"],
-      "extensions": [".bril"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "bril",
-      "scopeName": "source.bril",
-      "path": "./syntaxes/bril.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "bril",
+        "aliases": [
+          "Bril",
+          "bril"
+        ],
+        "extensions": [
+          ".bril"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "bril",
+        "scopeName": "source.bril",
+        "path": "./syntaxes/bril.tmLanguage.json"
+      }
+    ]
   }
 }
