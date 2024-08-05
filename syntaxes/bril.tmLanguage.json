@@ -3,27 +3,284 @@
 	"name": "Bril",
 	"patterns": [
 		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
+			"include": "#function-declaration"
 		}
 	],
 	"repository": {
-		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.bril",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
-		},
-		"strings": {
-			"name": "string.quoted.double.bril",
-			"begin": "\"",
-			"end": "\"",
+		"function-parameters": {
+			"name": "meta.parameters.bril",
+			"begin": "\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.parameters.begin.bril"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.parameters.end.bril"
+				}
+			},
 			"patterns": [
 				{
-					"name": "constant.character.escape.bril",
-					"match": "\\\\."
+					"include": "#function-parameters-body"
+				}
+			]
+		},
+		"function-parameters-body": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#parameter-name"
+				},
+				{
+					"include": "#parameter-type-annotation"
+				},
+				{
+					"name": "punctuation.separator.parameter.bril",
+					"match": ","
+				}
+			]
+		},
+		"parameter-type-annotation": {
+			"patterns": [
+				{
+					"name": "meta.type.annotation.bril",
+					"begin": "(:)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.operator.type.annotation.bril"
+						}
+					},
+					"end": "(?=[,)])|(?==[^>])",
+					"patterns": [
+						{
+							"include": "#type"
+						}
+					]
+				}
+			]
+		},
+		"parameter-name": {
+			"name": "variable.parameter.bril",
+			"match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
+			"captures": {
+				"0": {
+					"name": "variable.parameter.bril"
+				}
+			}
+		},
+		"return-type": {
+			"patterns": [
+				{
+					"name": "meta.return.type.bril",
+					"begin": "(?<=\\))\\s*(:)(?=\\s*\\S)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.operator.type.annotation.bril"
+						}
+					},
+					"end": "(?<![:|&])(?=$|^|[{};,]|//)",
+					"patterns": [
+						{
+							"include": "#type"
+						}
+					]
+				}
+			]
+		},
+		"function-declaration": {
+			"name": "meta.function.bril",
+			"patterns": [
+				{
+					"include": "#function-name"
+				},
+				{
+					"include": "#function-body"
+				}
+			]
+		},
+		"function-name": {
+			"name": "meta.definition.function.bril entity.name.function.bril",
+			"match": "@[_$[:alpha:]][_$[:alnum:]]*"
+		},
+		"function-body": {
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#function-parameters"
+				},
+				{
+					"include": "#return-type"
+				},
+				{
+					"include": "#type-function-return-type"
+				},
+				{
+					"include": "#decl-block"
+				}
+			]
+		},
+		"decl-block": {
+			"name": "meta.block.bril",
+			"begin": "\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.bril"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.block.bril"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#statements"
+				}
+			]
+		},
+		"statements": {
+			"patterns": [
+				{
+					"include": "#keywords"
+				},
+				{
+					"include": "#operators"
+				},
+				{
+					"include": "#punctuation-semicolon"
+				},
+				{
+					"include": "#assignment-operator"
+				},
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#bool"
+				},
+				{
+					"include": "#number"
+				},
+				{
+					"include": "#type"
+				},
+				{
+					"include": "#function-name"
+				},
+				{
+					"include": "#label"
+				},
+				{
+					"include": "#label-name"
+				},
+				{
+					"include": "#variable"
+				}
+			]
+		},
+		"punctuation-semicolon": {
+			"name": "punctuation.terminator.statement.bril",
+			"match": ";"
+		},
+		"assignment-operator": {
+			"name": "keyword.operator.assignment.bril",
+			"match": "="
+		},
+		"bool": {
+			"patterns": [
+				{
+					"name": "constant.language.bril",
+					"match": "\\b(false|true)\\b"
+				}
+			]
+		},
+		"variable": {
+			"name": "variable.name.bril",
+			"match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
+			"captures": {
+				"0": {
+					"name": "variable.name.bril"
+				}
+			}
+		},
+		"comment": {
+			"patterns": [
+				{
+					"name": "comment.line.bril",
+					"match": "\\#.*$"
+				}
+			]
+		},
+		"number": {
+			"patterns": [
+				{
+					"name": "constant.numeric.bril",
+					"match": "\\b(\\d+)\\b"
+				}
+			]
+		},
+		"operators": {
+			"patterns": [
+				{
+					"name": "keyword.operator.bril",
+					"match": "\\b(id|const|add|mul|sub|div|eq|lt|gt|le|ge|not|and|or)\\b"
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.bril",
+					"match": "\\b(jmp|br|ret|print|nop|speculate|guard|commit)\\b"
+				},
+				{
+					"name": "keyword.bril",
+					"match": "\\b(call)\\b"
+				}
+			]
+		},
+		"type": {
+			"patterns": [
+				{
+					"include": "#type-primitive"
+				}
+			]
+		},
+		"type-primitive": {
+			"name": "support.type.primitive.bril",
+			"match": "(?<!\\.)(bool|int|float)(?![_$[:alnum:]])"
+		},
+		"label": {
+			"patterns": [
+				{
+					"match": "(\\.[_$[:alpha:]][_$[:alnum:]\\.]*)\\s*(:)",
+					"captures": {
+						"1": {
+							"name": "entity.name.label.bril"
+						},
+						"2": {
+							"name": "punctuation.separator.label.bril"
+						}
+					}
+				}
+			]
+		},
+		"label-name": {
+			"patterns": [
+				{
+					"match": "(\\.[_$[:alpha:]][_$[:alnum:]\\.]*)\\b",
+					"captures": {
+						"1": {
+							"name": "entity.name.label.bril"
+						}
+					}
 				}
 			]
 		}
