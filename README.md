@@ -1,10 +1,12 @@
-# bril-lang-hightlight README
+![icon](icon.png)
+
+# Bril syntax hightlighting extension
 
 [Bril](https://github.com/sampsyo/bril) is an intermediate language for teaching compilers. This is a syntax highting extension for Bril.
 
 ## Features
 
-![bril-func-hightlight](images/bril-vsc-highlight.png)
+![bril-func-hightlight](images/example.png)
 
 
 ## Release Notes
